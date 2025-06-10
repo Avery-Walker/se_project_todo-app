@@ -1,4 +1,4 @@
-import { initialTodos, validationConfig } from "../utils/constants.js";
+import { validationConfig } from "../utils/constants.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Todo } from "../components/Todo.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
@@ -42,9 +42,4 @@ addTodoForm.addEventListener("submit", (evt) => {
   const todo = new Todo(values, "#todo-template");
   todosList.append(todo.getView());
   validator.resetValidation();
-});
-
-initialTodos.forEach((item) => {
-  const todo = new Todo(item, "#todo-template");
-  todosList.append(todo.getView());
 });
