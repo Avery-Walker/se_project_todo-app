@@ -5,10 +5,14 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
-const addTodoForm = addTodoPopup.querySelector(".popup__form");
+const addTodoForm = document.forms["add-todo-form"];
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
+const renderTodo = (values) => {
+  const todo = new Todo(values, "#todo-template");
+  todosList.append(todo.getView());
+};
 
 const validator = new FormValidator(validationConfig, addTodoForm);
 validator.enableValidation();
@@ -39,13 +43,11 @@ addTodoForm.addEventListener("submit", (evt) => {
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
   const values = { name, date, id: uuidv4() };
-  const todo = new Todo(values, "#todo-template");
-  todosList.append(todo.getView());
+  renderTodo(values);
   validator.resetValidation();
   closeModal(addTodoPopup);
 });
 
 initialTodos.forEach((item) => {
-  const todo = new Todo(item, "#todo-template");
-  todosList.append(todo.getView());
+  renderTodo(item);
 });

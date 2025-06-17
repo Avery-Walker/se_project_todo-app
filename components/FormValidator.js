@@ -1,28 +1,29 @@
 class FormValidator {
   constructor(settings, formElement) {
-    this.settings = settings;
-    this.formElement = formElement;
+    this._settings = settings;
+    this._formElement = formElement;
     this.inputList = Array.from(
-      this.formElement.querySelectorAll(this.settings.inputSelector)
+      this._formElement.querySelectorAll(this._settings.inputSelector)
     );
-    this.buttonElement = this.formElement.querySelector(
-      this.settings.submitButtonSelector
+    this.buttonElement = this._formElement.querySelector(
+      this._settings.submitButtonSelector
     );
+    this._inputErrorClass = settings.inputErrorClass;
   }
 
   _showInputError(inputElement, errorMessage) {
     const errorElementId = `#${inputElement.id}-error`;
-    const errorElement = this.formElement.querySelector(errorElementId);
-    inputElement.classList.add(this.settings.inputErrorClass);
+    const errorElement = this._formElement.querySelector(errorElementId);
+    inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add(this.settings.errorClass);
+    errorElement.classList.add(this._settings.errorClass);
   }
 
   _hideInputError(inputElement) {
     const errorElementId = `#${inputElement.id}-error`;
-    const errorElement = this.formElement.querySelector(errorElementId);
-    inputElement.classList.remove(this.settings.inputErrorClass);
-    errorElement.classList.remove(this.settings.errorClass);
+    const errorElement = this._formElement.querySelector(errorElementId);
+    inputElement.classList.remove(this._inputErrorClass);
+    errorElement.classList.remove(this._settings.errorClass);
     errorElement.textContent = "";
   }
 
@@ -42,10 +43,10 @@ class FormValidator {
 
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
-      this.buttonElement.classList.add(this.settings.inactiveButtonClass);
+      this.buttonElement.classList.add(this._settings.inactiveButtonClass);
       this.buttonElement.disabled = true;
     } else {
-      this.buttonElement.classList.remove(this.settings.inactiveButtonClass);
+      this.buttonElement.classList.remove(this._settings.inactiveButtonClass);
       this.buttonElement.disabled = false;
     }
   }
@@ -62,15 +63,15 @@ class FormValidator {
   }
 
   resetValidation() {
-    this.buttonElement.disabled = true;
+    this._toggleButtonState();
     this.inputList.forEach((inputElement) =>
       this._hideInputError(inputElement)
     );
-    this.formElement.reset();
+    this._formElement.reset();
   }
 
   enableValidation() {
-    this.formElement.addEventListener("submit", (evt) => {
+    this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
     this._setEventListeners();
