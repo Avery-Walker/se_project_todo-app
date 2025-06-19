@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
 const addTodoForm = document.forms["add-todo-form"];
+const createTodo = addTodoForm.querySelector(".popup__button");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
@@ -34,6 +35,7 @@ addTodoCloseBtn.addEventListener("click", () => {
 });
 
 addTodoForm.addEventListener("submit", (evt) => {
+  createTodo.disabled = true;
   evt.preventDefault();
   const name = evt.target.name.value;
   const dateInput = evt.target.date.value;
