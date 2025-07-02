@@ -1,5 +1,5 @@
 class Todo {
-  constructor(data, selector, { onDelete, onToggleCompleted } = {}) {
+  constructor(data, selector, { onDelete, onToggleCompleted }) {
     this.data = data;
     this.selector = selector;
     this._onDelete = onDelete;
