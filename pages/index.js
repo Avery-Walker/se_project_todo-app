@@ -23,13 +23,13 @@ const renderTodo = (values) => {
       todoCounter.updateCompleted(isChecked);
     },
   });
-  todosSection.append(todo.getView());
+  todoSection.addItem(todo.getView());
 };
 
 const todoSection = new Section({
   items: initialTodos,
   renderer: renderTodo,
-  containerSelector: ".todo__list",
+  containerSelector: ".todos__list",
 });
 
 todoSection.renderItems();
