@@ -1,7 +1,9 @@
 class Todo {
-  constructor(data, selector) {
+  constructor(data, selector, { onDelete, onToggleCompleted } = {}) {
     this.data = data;
     this.selector = selector;
+    this._onDelete = onDelete;
+    this._onToggleCompleted = onToggleCompleted;
   }
 
   getView() {
@@ -38,8 +40,20 @@ class Todo {
 
   _setEventListeners(actualTodoElement) {
     const todoDeleteBtn = actualTodoElement.querySelector(".todo__delete-btn");
+    const todoCheckboxEl = actualTodoElement.querySelector(".todo__completed");
     todoDeleteBtn.addEventListener("click", () => {
       actualTodoElement.remove();
+      if (this._onDelete) {
+        this._onDelete(this.data);
+      }
+    });
+
+    todoCheckboxEl.addEventListener("change", (e) => {
+      const isChecked = e.target.checked;
+      this.data.completed = isChecked;
+      if (this._onToggleCompleted) {
+        this._onToggleCompleted(isChecked);
+      }
     });
   }
 }
