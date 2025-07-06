@@ -11,6 +11,13 @@ const addTodoForm = document.forms["add-todo-form"];
 const todoTemplate = document.querySelector("#todo-template");
 const todoCounter = new TodoCounter(initialTodos, ".counter__text");
 
+function updateTodoCounterOnAdd(values) {
+  todoCounter.updateTotoal(true);
+  if (values.completed) {
+    todoCounter.updateCompleted(true);
+  }
+}
+
 const renderTodo = (values) => {
   const todo = new Todo(values, "#todo-template", {
     onDelete: (data) => {
@@ -51,10 +58,7 @@ const addTodoPopupInstance = new PopupWithForm("#add-todo-popup", (data) => {
   renderTodo(values);
 
   initialTodos.push(values);
-  todoCounter.updateTotal(true);
-  if (values.completed) {
-    todoCounter.updateCompleted(true);
-  }
+  updateTodoCounterOnAdd(values);
   validator.resetValidation();
 });
 
